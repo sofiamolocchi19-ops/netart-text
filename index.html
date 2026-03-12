@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<style>
+
+body{
+background:white;
+font-family:serif;
+padding:80px;
+line-height:1.7;
+font-size:20px;
+}
+
+#text{
+max-width:800px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="text"></div>
+
+<script>
+
+let text = `INCOLLA QUI IL TESTO DI PLATONE`
+
+let visits = localStorage.getItem("visits")
+
+if(!visits){
+
+visits = 0
+
+}
+
+visits++
+
+localStorage.setItem("visits",visits)
+
+let stage = Math.floor(visits/10)
+
+if(stage>10) stage=10
+
+let percent = stage*0.1
+
+function erase(text,percent){
+
+let chars = text.split("")
+let total = chars.length
+let remove = Math.floor(total*percent)
+
+for(let i=0;i<remove;i++){
+
+let index = Math.floor(Math.random()*total)
+
+if(chars[index]!=" "){
+
+chars[index]=" "
+
+}
+
+}
+
+return chars.join("")
+
+}
+
+document.getElementById("text").innerText = erase(text,percent)
+
+</script>
+
+</body>
+
+</html>
