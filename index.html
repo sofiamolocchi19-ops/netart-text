@@ -2,46 +2,50 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<title>Net Art Platone</title>
+<title>Net Art</title>
+
 <style>
-body {
-  background: white;
-  font-family: serif;
-  padding: 40px;
-  line-height: 1.7;
-  font-size: 18px;
+body{
+background:white;
+font-family:serif;
+padding:60px;
+line-height:1.7;
+font-size:18px;
 }
-#text {
-  max-width: 800px;
-  word-wrap: break-word;
+
+#text{
+max-width:800px;
 }
 </style>
+
 </head>
 <body>
 
 <div id="text"></div>
 
 <script>
-// ======= TESTO DI PLATONE =======
+
+// ===== TESTO =====
+
 let testo = `Socrate – Ho sentito narrare che a Naucrati d’Egitto dimorava uno dei vecchi dèi del
 paese, il dio a cui è sacro l’uccello chiamato ibis, e di nome detto Theuth. Egli fu
-l’inventore dei numeri, del calcolo, della geometria e dell’astronomia, per non parlare
+l’inventore dei numeri, [d] del calcolo, della geometria e dell’astronomia, per non parlare
 del gioco del tavoliere e dei dadi e finalmente delle lettere dell’alfabeto. Re dell’intiero
 paese era a quel tempo Thamus, che abitava nella grande città dell’Alto Egitto che i Greci
 chiamano Tebe egiziana e il cui dio è Ammone. Theuth venne presso il re, gli rivelò le sue
 arti dicendo che esse dovevano esser diffuse presso tutti gli Egiziani. Il re di ciascuna gli
 chiedeva quale utilità comportasse, e poiché Theuth spiegava, egli disapprovava ciò che
-gli sembrava negativo, lodava ciò che gli pareva dicesse bene. Su ciascuna arte, dice
+gli sembrava [e] negativo, lodava ciò che gli pareva dicesse bene. Su ciascuna arte, dice
 la storia, Thamus aveva molti argomenti da dire a Theuth sia contro che a favore, ma
 sarebbe troppo lungo esporli. Quando giunsero all’alfabeto: “Questa scienza, o re – disse
-Theuth – renderà gli Egiziani più sapienti e arricchirà la loro memoria perché questa
+Theuth – renderà gli Egiziani piú sapienti e arricchirà la loro memoria perché questa
 scoperta è una medicina per la sapienza e la memoria”. E il re rispose: “O ingegnosissimo
 Theuth, una cosa è la potenza creatrice di arti nuove, altra cosa è giudicare qual grado di
-danno e di utilità esse posseggano per coloro che le useranno. E così ora tu, per
+danno e di utilità esse posseggano per coloro che le useranno. E cosí ora tu, per
 benevolenza verso l’alfabeto di cui sei inventore, hai esposto il contrario del suo vero
 effetto. Perché esso ingenererà oblio nelle anime di chi lo imparerà: essi cesseranno di
 esercitarsi la memoria perché fidandosi dello scritto richiameranno le cose alla mente non
-più dall’interno di se stessi, ma dal di fuori, attraverso segni estranei: ciò che tu hai trovato
+piú dall’interno di se stessi, ma dal di fuori, attraverso segni estranei: ciò che tu hai trovato
 non è una ricetta per la memoria ma per richiamare alla mente. Né tu offri vera sapienza ai
 tuoi scolari, ma ne dai solo l’apparenza perché essi, grazie a te, potendo avere notizie di
 molte cose senza insegnamento, si crederanno d’essere dottissimi, mentre per la maggior
@@ -58,9 +62,9 @@ falso.
 Fedro – Fai bene a darmi addosso anch’io son del parere che riguardo l’alfabeto le cose
 stiano come dice il Tebano.
 Socrate – Dunque chi crede di poter tramandare un’arte affidandola all’alfabeto e chi a sua
-volta l’accoglie supponendo che dallo scritto si possa trarre qualcosa di preciso e
+volta l’accoglie supponendo che dallo scritto si possa trarre qualcosa di preciso e di
 permanente, deve esser pieno d’una grande ingenuità, e deve ignorare assolutamente la
-profezia di Ammone se s’immagina che le parole scritte siano qualcosa di più del
+profezia di Ammone se s’immagina che le parole scritte siano qualcosa di piú del
 rinfrescare la memoria a chi sa le cose di cui tratta lo scritto.
 Fedro – È giustissimo.
 Socrate – Perché vedi, o Fedro, la scrittura è in una strana condizione, simile veramente a
@@ -69,39 +73,72 @@ li interroghi, tengono un maestoso silenzio. Nello stesso modo si comportano le 
 scritte: crederesti che potessero parlare quasi che avessero in mente qualcosa; ma se tu,
 volendo imparare, chiedi loro qualcosa di ciò che dicono esse ti manifestano una cosa
 sola e sempre la stessa. E una volta che sia messo in iscritto, ogni discorso arriva alle
-mani di tutti, tanto di chi l’intende tanto di chi non ci ha nulla a che fare; né sa a chi gli
+mani di tutti, tanto di chi l’intende tanto di chi non ci ha nulla [e] a che fare; né sa a chi gli
 convenga parlare e a chi no. Prevaricato ed offeso oltre ragione esso ha sempre bisogno
 che il padre gli venga in aiuto, perché esso da solo non può difendersi né aiutarsi.
 Fedro – Ancora hai perfettamente ragione.
 Socrate – E che? Vogliamo noi considerare un’altra specie di discorso, fratello di questo
-scritto, ma legittimo, e vedere in che modo nasce e di quanto è migliore e più efficace
+scritto, ma legittimo, e vedere in che modo nasce e di quanto è migliore e piú efficace
 dell’altro?
 Fedro – Che discorso intendi e qual è la sua origine?
 Socrate – Il discorso che è scritto con la scienza nell’anima di chi impara: questo può
-difendere se stesso, e sa a chi gli convenga parlare e a chi tacere.`;
+difendere se stesso, e sa a chi gli convenga parlare e a chi tacere`
 
-// ======= CALCOLO VISITE E SCOMPARSA =======
-let visits = parseInt(localStorage.getItem("visits")) || 0;
-visits++;
-if (visits > 100) visits = 100; // massimo 100
-localStorage.setItem("visits", visits);
 
-// percentuale di parole da cancellare
-let stage = Math.floor(visits / 10);
-let percent = stage * 0.1; // 0.1 = 10%
+// ===== CONTA VISITE =====
 
-// trasformo il testo in array di parole
-let parole = testo.split(/\s+/);
-let totaleParole = parole.length;
-let daCancellare = Math.floor(totaleParole * percent);
+let visits = parseInt(localStorage.getItem("visits")) || 0
+visits++
+if(visits>100) visits=100
+localStorage.setItem("visits",visits)
 
-// cancello parole casuali
-for (let i = 0; i < daCancellare; i++) {
-    let idx = Math.floor(Math.random() * totaleParole);
-    parole[idx] = "_____"; // puoi anche mettere "" se vuoi sparire completamente
+
+// ===== PREPARA PAROLE =====
+
+let parole = testo.split(/\s+/)
+let totale = parole.length
+
+
+// ===== CARICA PAROLE CANCELLATE =====
+
+let cancellate = JSON.parse(localStorage.getItem("deletedWords")) || []
+
+
+// ===== CALCOLA QUANTE DEVONO ESSERE CANCELLATE =====
+
+let percentuale = visits/100
+let target = Math.floor(totale*percentuale)
+
+
+// ===== AGGIUNGI NUOVE PAROLE DA CANCELLARE =====
+
+while(cancellate.length < target){
+
+let idx = Math.floor(Math.random()*totale)
+
+if(!cancellate.includes(idx)){
+cancellate.push(idx)
 }
 
-document.getElementById("text").innerText = parole.join(" ");
+}
+
+
+// ===== SALVA STATO =====
+
+localStorage.setItem("deletedWords",JSON.stringify(cancellate))
+
+
+// ===== APPLICA CANCELLAZIONE =====
+
+cancellate.forEach(i=>{
+parole[i] = ""
+})
+
+
+// ===== MOSTRA TESTO =====
+
+document.getElementById("text").innerText = parole.join(" ")
+
 </script>
 
 </body>
