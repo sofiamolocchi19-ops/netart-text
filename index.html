@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
+
 <meta charset="UTF-8">
-<title>Net Art</title>
 
 <style>
+
 body{
 background:white;
 font-family:serif;
@@ -15,19 +16,22 @@ font-size:18px;
 
 #text{
 max-width:800px;
+white-space:pre-wrap;
 }
+
 </style>
 
 </head>
+
 <body>
 
 <div id="text"></div>
 
 <script>
 
-// ===== TESTO =====
+// -------- TESTO --------
 
-let testo = `Socrate – Ho sentito narrare che a Naucrati d’Egitto dimorava uno dei vecchi dèi del
+let originalText = `Socrate – Ho sentito narrare che a Naucrati d’Egitto dimorava uno dei vecchi dèi del
 paese, il dio a cui è sacro l’uccello chiamato ibis, e di nome detto Theuth. Egli fu
 l’inventore dei numeri, [d] del calcolo, della geometria e dell’astronomia, per non parlare
 del gioco del tavoliere e dei dadi e finalmente delle lettere dell’alfabeto. Re dell’intiero
@@ -85,61 +89,78 @@ Socrate – Il discorso che è scritto con la scienza nell’anima di chi impara
 difendere se stesso, e sa a chi gli convenga parlare e a chi tacere`
 
 
-// ===== CONTA VISITE =====
+// -------- PAROLE --------
+
+let words = originalText.split(/\s+/)
+let totalWords = words.length
+
+
+// -------- STATO SALVATO --------
+
+let saved = localStorage.getItem("erasedWords")
+let erasedSet
+
+if(saved){
+erasedSet = new Set(JSON.parse(saved))
+}else{
+erasedSet = new Set()
+}
+
+
+// -------- CONTATORE VISITE --------
 
 let visits = parseInt(localStorage.getItem("visits")) || 0
 visits++
-if(visits>100) visits=100
-localStorage.setItem("visits",visits)
+
+if(visits > 100) visits = 100
+
+localStorage.setItem("visits", visits)
 
 
-// ===== PREPARA PAROLE =====
+// -------- QUANTE PAROLE DEVONO ESSERE CANCELLATE --------
 
-let parole = testo.split(/\s+/)
-let totale = parole.length
-
-
-// ===== CARICA PAROLE CANCELLATE =====
-
-let cancellate = JSON.parse(localStorage.getItem("deletedWords")) || []
+let percent = visits / 100
+let target = Math.floor(totalWords * percent)
 
 
-// ===== CALCOLA QUANTE DEVONO ESSERE CANCELLATE =====
+// -------- AGGIUNGERE NUOVE PAROLE CANCELLATE --------
 
-let percentuale = visits/100
-let target = Math.floor(totale*percentuale)
+while(erasedSet.size < target){
 
-
-// ===== AGGIUNGI NUOVE PAROLE DA CANCELLARE =====
-
-while(cancellate.length < target){
-
-let idx = Math.floor(Math.random()*totale)
-
-if(!cancellate.includes(idx)){
-cancellate.push(idx)
-}
+let index = Math.floor(Math.random() * totalWords)
+erasedSet.add(index)
 
 }
 
 
-// ===== SALVA STATO =====
+// -------- SALVARE STATO --------
 
-localStorage.setItem("deletedWords",JSON.stringify(cancellate))
-
-
-// ===== APPLICA CANCELLAZIONE =====
-
-cancellate.forEach(i=>{
-parole[i] = ""
-})
+localStorage.setItem("erasedWords", JSON.stringify([...erasedSet]))
 
 
-// ===== MOSTRA TESTO =====
+// -------- COSTRUIRE TESTO --------
 
-document.getElementById("text").innerText = parole.join(" ")
+let output = words.map((word,i)=>{
+
+if(erasedSet.has(i)){
+
+return " ".repeat(word.length)
+
+}else{
+
+return word
+
+}
+
+}).join(" ")
+
+
+// -------- MOSTRARE --------
+
+document.getElementById("text").innerText = output
 
 </script>
 
 </body>
 </html>
+
